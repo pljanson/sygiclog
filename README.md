@@ -3,9 +3,9 @@ sygiclog
 
 create a gpx file from a sygic log file
 
-For now this is a placeholder, while I'll learn git and github (and move away from svn).
-I will add the old tree soon (I hope). 
+Now this contains the initial code (1.5.0beta version), 
+while I'll learn git and github (and move away from svn).
 
-Initial edit on clone pc :)
+When code is cleaned I'll move it to RC1
 
 Greetings Paul
