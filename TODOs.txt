@@ -1,0 +1,24 @@
+Todos:
+
+for 1.5.0 
+cleanup, unit tests, last vrsion bin file check, upload git
+
+road map
+rc1
+	cleanup code
+	check last bin version 13.4.1 log (version 5)
+	Program.cs Thanks to Lars TODO
+	unit tests for versions 2,3,4,5
+final	git upload
+
+current  beta 1
+
+for 1.4.0 find out about gpx timezone settings and put them in the file.
+
+TZC time zone correction parsing
+LogParserSettings -> toXMLComment() ToString() for loggin into the output files.
+
+Every version:
+- check version numbers in assembly and string
+- build output files (exe & zip)
+- update webpage / manual

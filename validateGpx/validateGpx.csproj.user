@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>./test.gpx.xml true</StartArguments>
+    <StartWorkingDirectory>E:\projects\SygicLog\Sygiclog\validateGpx\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|pljtest' ">
+    <StartArguments>./test.gpx.xml true</StartArguments>
+    <StartWorkingDirectory>E:\projects\SygicLog\Sygiclog\validateGpx\bin\Debug\</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>

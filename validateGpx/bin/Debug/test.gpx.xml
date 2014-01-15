@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--SygicTravelbookLog inputfile 120418_074150.log created at:25-4-2012 22:15:59-->
+<gpx 
+version="1.1" 
+creator="SygicTravelbookLog" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:gpxext="http://www.p-l-j.org/xmlschemas/GpxExtPlj/v1"
+xmlns="http://www.topografix.com/GPX/1/1" 
+xsi:schemaLocation="http://www.p-l-j.org/xmlschemas/GpxExtPlj/v1 http://www.p-l-j.org/xmlschemas/GpxExtPlj/v1/GpxExtPlj.xsd http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+	<trk>
+		<name>120418_074150.log</name>
+		<cmt>created by SygicTravelbookLog</cmt>
+		<trkseg>
+			<trkpt lat="51.45678" lon="5.51234">
+				<ele>10</ele>
+				<time>2012-04-18T07:41:50</time>
+				<extensions>
+					<gpxext:TrackPointExtension> <!-- xmlns:gpxext="http://www.p-l-j.org/xmlschemas/GpxExtPlj/v1" -->
+						<gpxext:Speed>5.55</gpxext:Speed>
+						<gpxext:Course>30.0</gpxext:Course>
+					</gpxext:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="51.4568" lon="5.51235">
+				<ele>0</ele>
+				<time>2012-04-18T07:41:51</time>
+				<extensions>
+					<gpxext:TrackPointExtension>
+						<gpxext:Speed>10.10</gpxext:Speed>
+						<gpxext:Course>32.0</gpxext:Course>
+					</gpxext:TrackPointExtension>
+				</extensions>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>

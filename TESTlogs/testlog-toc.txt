@@ -1,0 +1,20 @@
+version 2file
+	iphone files
+	120528_114812.log xml log wait iphone
+	120530_090514.log
+		IMG_0049.jpg - IMG_0051.jpg
+	myfile
+	110715_075330.log
+
+version 3 file
+	120520_113917.log
+	120717_135755.log (E20 Malmo Sweden) (android 11.2.6)
+	20413_074738.log (n270 neuenen helmond)
+
+version 4 file
+	120801_083158.log (Denmark) (android 12.1.0)
+	120730_141948.log [Växjö]
+
+version 5 ... android / 13.xx
+	130729_091649.log (Denmark)
+	131231_164356.log  sygic 13.4.1 ermelo looweg
