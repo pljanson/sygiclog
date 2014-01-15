@@ -18,3 +18,14 @@ version 4 file
 version 5 ... android / 13.xx
 	130729_091649.log (Denmark)
 	131231_164356.log  sygic 13.4.1 ermelo looweg
+
+110715 NL Eindhoven -> Duinkerke Fr
+120413 NL Neunen -> Helmond
+120520 Italy
+120528 Spain south of  Valencia 
+120530 Spain north of valencia
+120717 SE Malmo E20
+120730 SE Eneryda  - Vaxjo 
+120801 DK E45 south of Hammelev
+130729 NL Eindhoven A67 Border DE (2x sleep)
+131231 NL Ermelo (horst) 
