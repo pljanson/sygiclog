@@ -5,10 +5,11 @@ cleanup, unit tests, last vrsion bin file check, upload git
 
 road map
 rc1
-	cleanup code
-	check last bin version 13.4.1 log (version 5)
-	Program.cs Thanks to Lars TODO
-	unit tests for versions 2,3,4,5
+	. cleanup code
+	v check last Sygic version 13.4.1 logfiles (version 5)
+	v Program.cs Thanks to Lars TODO
+	v unit tests for versions 2,3,4,5
+	v validate the gpx files on the map
 final	git upload
 
 current  beta 1
