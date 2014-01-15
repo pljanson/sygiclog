@@ -1,0 +1,77 @@
+marian holler (Product manager) 1 month ago
+Hi guys,
+here is the log file format, hope it'll help. Let me know.
+
+regards,
+marian 
+
+
+"#define ATODWORD(a,b,c,d) ((a<<24) | (b<<16) | (c<<8) | d)    
+if ( version != ATODWORD('T','R','L','F') )    
+{   
+ if ( version == ATODWORD('T','R','F','2') )  
+  m_nVersion = 2; 
+ else if ( version == ATODWORD('T','R','F','3') )  
+  m_nVersion = 3; 
+ else if ( version == ATODWORD('T','R','F','4') )  
+  m_nVersion = 4; 
+ else  
+  return; 
+}   
+"
+
+header				
+======
+dword	version			
+INT	favorite			
+BYTE 	log type			
+DWORD	log start time	version 3 or higher		
+DWORD	log duration			
+DWORD	log length			
+DWORD 	last mark distance			
+String	start log point description			
+String	end log point description			stored as number of WCHAR followd by string
+String 	start time	version 4 or higher		
+
+data	
+====			
+DWORD	point count			
+	LONG	longitude		
+	LONG 	latitude		
+	LONG	altitude		
+	DWORD	time		
+	FLOAT	speed		
+	BYTE	signal quality		
+	BYTE	speeding		version 3 or higher
+	BYTE	gsm signal quality		version 1 or higher
+	BYTE 	internet signal quality		version 1 or higher
+	BYTE 	battery status		version 1 or higher
+DWORD	mark count			
+	LONG 	longitude		
+	LONG	latitude		
+	DWORD	time		
+	BYTE	signal quality		
+	BYTE	type		
+	DWORD	lap time		
+	
+=======================================
+jwevandijk
+jwevandijk 1 month ago
+This is the speed as a floating point number. I have not seen Basic since I bought a Pascal ROM for my BBC computer in 1982 but below are two snippets from a Python class that parses the waypoints based on the format given above by Marian (complete script exporting csv, gpx and kml about 400 lines).
+
+def get_record(self, record_format):
+recsize = struct.calcsize(record_format)
+rec = struct.unpack(record_format, self.data[self.offset:self.offset + recsize])
+self.offset += recsize
+return rec
+
+lon, lat, alt, tstmp, speed, qgps, sding, qgsm, qip, bat = data.get_record(')
+
+Using the documentation of python struct (http://www.python.org/doc//current/li...) it might be easy to find a Basic equivalent.
+
+However, it pays of to switch to Python: my parser runs on my Android phone and on Linux and Windows PCs.
+
+Hope this helps,
+Janwillem 
+===========================================
+https://support.sygic.com/sygic/topics/interpretation_of_the_files_in_the_travel_book
