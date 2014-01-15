@@ -6,10 +6,10 @@
  * 
  * Copyright (C) 2014, Paul Janson
  *
- * Version 1.5.0
+ * Version 1.5.0.beta
  *
  * History
- * 1.5.0 updated for version 5 based on Lars's information
+ * 1.5.0beta updated for version 5 based on Lars's information; added version 2..5 unittests & test inputs
  * 1.4.0 added for all *.log files in this directory, refactor, TIMEZONE!
  * 1.3.2 start refactoring for unit tests
  * 1.3.1 fixed title string
@@ -34,8 +34,8 @@
  * http://auralogextractor.appspot.com/
  * And thanks to Marian Holler (Product manager) from sygic for posting information on their forum.
  */
-/* Thanks to Lars TODO exact data lars :) 
-  * 
+/* Thanks to Lars Tiede for his version 5 code, that I borrowed. 
+  * http://fleckenzwerg2000.blogspot.no/2013/03/merging-sygic-travel-book-log-files-and.html
   */
 using System;
 using System.IO; //File Path
