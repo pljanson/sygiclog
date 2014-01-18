@@ -10,7 +10,7 @@ namespace validateGpx
 {
     class Program
     {
-        static bool bWaitConsole = false;
+        //static bool bWaitConsole = false;
 
         static void Main(string[] args)
         {
