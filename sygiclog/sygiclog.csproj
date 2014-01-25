@@ -8,7 +8,7 @@
     <ProjectGuid>{FDD5C843-9AF0-410B-9A08-5C8FF50C3F91}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sygiclog</RootNamespace>
+    <RootNamespace>Sygiclog</RootNamespace>
     <AssemblyName>sygiclog</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -24,7 +24,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\paul\Application Data\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <TargetFrameworkProfile />
-    <StartupObject>sygiclog.SygicTravelbookLog</StartupObject>
+    <StartupObject>Sygiclog.SygicTravelbookLog</StartupObject>
     <NoWin32Manifest>False</NoWin32Manifest>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <RunCodeAnalysis>False</RunCodeAnalysis>
@@ -76,7 +76,7 @@
     <Compile Include="LogFile.cs" />
     <Compile Include="LogParserSettings.cs" />
     <Compile Include="SygicLogFile.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="SygicTravelbookLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlValidate.cs" />
   </ItemGroup>

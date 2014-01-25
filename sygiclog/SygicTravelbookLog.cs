@@ -47,6 +47,7 @@
 namespace Sygiclog
 {
 using System;
+using System.Globalization; // StringComparison
 using System.IO; // File Path
 
 /// <summary>
@@ -129,7 +130,6 @@ public static class SygicTravelbookLog
             else
             {
                 // rest
-                settings.FileNameWithoutExtension = Path.GetFileNameWithoutExtension(settings.InputFileName);
                 Console.WriteLine(SygiclogVersionString + ", log 2 gpx");
                 Console.WriteLine("SygicTravelbookLog inputfile " + settings.InputFileName + " created at:" + now.ToString()); // Write comments
 
@@ -146,7 +146,7 @@ public static class SygicTravelbookLog
                         Console.Write("[all]  ");
                     }
 
-                    if (args[argIdx].StartsWith("tzc"))
+                    if (args[argIdx].StartsWith("tzc", StringComparison.Ordinal))
                     {
                         Console.Write("[tzcSHH:MM]");
                         settings.Tzc = args[argIdx];
@@ -158,12 +158,12 @@ public static class SygicTravelbookLog
                         {
                             string timeString = settings.Tzc.Remove(0, 3);
                             string[] split = timeString.Split(new char[] { ':' });
-                            settings.TzcHours = Convert.ToInt32(split[0]);
+                            settings.TzcHours = Convert.ToInt32(split[0], CultureInfo.InvariantCulture);
 
                             if (split.Length >= 2)
                             {
                                 int sign = 1;
-                                int minutes = Convert.ToInt32(split[1]);
+                                int minutes = Convert.ToInt32(split[1], CultureInfo.InvariantCulture);
 
                                 // carry over the sign
                                 if (settings.TzcHours < 0)
@@ -189,7 +189,7 @@ public static class SygicTravelbookLog
                     if (args[argIdx] == "xml")
                     {
                         Console.Write("[xml]");
-                        settings.XMLExtention = ".gpx.xml";
+                        settings.XmlExtension = ".gpx.xml";
                     }
 
                     if (args[argIdx] == "wait")
@@ -233,7 +233,6 @@ public static class SygicTravelbookLog
                         {
                             parseThisFile = true;
                             settings.InputFileName = str;
-                            settings.FileNameWithoutExtension = Path.GetFileNameWithoutExtension(settings.InputFileName);
                         }
                         else
                         {
@@ -247,8 +246,6 @@ public static class SygicTravelbookLog
 
                         // else
                         filesParsed++;
-                        settings.FileNameWithoutExtension = Path.GetFileNameWithoutExtension(str);
-
                         SygicLogFile sygicLogFile = new SygicLogFile(settings);
                         bool succes = sygicLogFile.Parse();
 

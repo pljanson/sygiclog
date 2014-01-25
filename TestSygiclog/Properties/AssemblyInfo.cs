@@ -1,4 +1,9 @@
-﻿#region Using directives
+﻿//-----------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="PLJ">
+// Copyright (C) 2014, Paul Janson, LGPL 2.1
+// </copyright>
+//-----------------------------------------------------------------------
+#region Using directives
 
 using System;
 using System.Reflection;
