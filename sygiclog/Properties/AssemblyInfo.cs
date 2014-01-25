@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PLJ")]
 [assembly: AssemblyProduct("sygiclog")]
-[assembly: AssemblyCopyright("Copyright © PLJ 2013")]
+[assembly: AssemblyCopyright("Copyright © PLJ 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

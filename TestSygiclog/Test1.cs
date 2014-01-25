@@ -77,7 +77,7 @@ namespace TestSygiclog
         [Test]
         public static void SygicTravelbookLog()
         {
-            Assert.AreEqual("Sygiclog v1.5.0beta", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
+            Assert.AreEqual("Sygiclog v1.5.0rc", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
             
             // TODO doUsage()
         }

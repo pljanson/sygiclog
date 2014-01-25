@@ -58,7 +58,7 @@ public static class SygicTravelbookLog
     /// <summary>
     /// The version string
     /// </summary>
-    public const string SygiclogVersionString = "Sygiclog v1.5.0beta";
+    public const string SygiclogVersionString = "Sygiclog v1.5.0rc";
 
     /// <summary>
     /// The command line manual
