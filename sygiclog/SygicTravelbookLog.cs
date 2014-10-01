@@ -12,7 +12,7 @@
  *
  * Copyright (C) 2014, Paul Janson
  *
- * Version 1.5.0.beta
+ * Version 1.5.0.rc2
  *
  * History
  * 1.5.0beta updated for version 5 based on Lars's information; added version 2..5 unittests & test inputs
@@ -58,7 +58,7 @@ public static class SygicTravelbookLog
     /// <summary>
     /// The version string
     /// </summary>
-    public const string SygiclogVersionString = "Sygiclog v1.5.0rc";
+    public const string SygiclogVersionString = "Sygiclog v1.5.0rc2";
 
     /// <summary>
     /// The command line manual
@@ -71,7 +71,7 @@ public static class SygicTravelbookLog
         Console.WriteLine("Usage: sygiclog.exe [log_file|all] [xml] [validate] [gpxext] [wait] [log]");
         Console.WriteLine("\t [log_file] the log file");
         Console.WriteLine("\t [all]      for all log files in this directory");
-        Console.WriteLine("\t [tzcSHH:MM]   timezone correction. S Sign, H Hours, M Minutes ");
+        // Console.WriteLine("\t [tzcSHH:MM]   timezone correction. S Sign, H Hours, M Minutes ");
         Console.WriteLine("\t [xml]      the gpx file will get the .gpx.xml extension");
         Console.WriteLine("\t [validate] validate the output file");
         Console.WriteLine("\t [gpxext]   use GPX extensions for additional data");
@@ -83,9 +83,9 @@ public static class SygicTravelbookLog
         Console.WriteLine("Example:");
         Console.WriteLine(@"sygiclog.exe .\travelbook.log");
         Console.WriteLine();
-        Console.WriteLine("TZC Time Zone Correction:"); // parse the TZC
-        Console.WriteLine("CET = UTC+1:00 So the TZC is -1:00! So tzc-1");
-        Console.WriteLine("CET+DST = UTC+2:00 So the TZC is -2:00! So tzc-2");
+        // Console.WriteLine("TZC Time Zone Correction:"); // parse the TZC
+        // Console.WriteLine("CET = UTC+1:00 So the TZC is -1:00! So tzc-1");
+        // Console.WriteLine("CET+DST = UTC+2:00 So the TZC is -2:00! So tzc-2");
     }
     
     /// <summary>
@@ -146,6 +146,7 @@ public static class SygicTravelbookLog
                         Console.Write("[all]  ");
                     }
 
+                    /*
                     if (args[argIdx].StartsWith("tzc", StringComparison.Ordinal))
                     {
                         Console.Write("[tzcSHH:MM]");
@@ -185,7 +186,7 @@ public static class SygicTravelbookLog
                             // Console.WriteLine(exception);
                         }
                     }
-
+                    */
                     if (args[argIdx] == "xml")
                     {
                         Console.Write("[xml]");

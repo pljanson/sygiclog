@@ -41,6 +41,7 @@ public class LogParserSettings
     /// </summary>
     private bool doAll;
     
+    /*
     /// <summary>
     /// The time zone correction string.
     /// </summary>
@@ -55,7 +56,8 @@ public class LogParserSettings
     /// The time zone correction, minutes part
     /// </summary>
     private int tzcMinutes;
-    
+    */
+   
     /// <summary>
     /// Do we need to validate the generated GPX (xml) file?
     /// </summary>
@@ -91,9 +93,9 @@ public class LogParserSettings
         this.inputFileName = string.Empty;
         this.XmlExtension = ".gpx";
         this.doAll = false;
-        this.tzcName = string.Empty;
-        this.tzcHours = 0;
-        this.tzcMinutes = 0;
+        // this.tzcName = string.Empty;
+        // this.tzcHours = 0;
+        // this.tzcMinutes = 0;
         this.doValidate = false;
         this.useGpxExt = false;
         this.waitConsole = false;
@@ -117,6 +119,7 @@ public class LogParserSettings
         }
     }
     
+    /*
     /// <summary>
     /// Gets or sets a value indicating whether the time zone string
     /// </summary>
@@ -164,7 +167,8 @@ public class LogParserSettings
             this.tzcMinutes = value;
         }
     }
-    
+    */
+
     /// <summary>
     /// Gets or sets a value indicating whether the AppTitle string
     /// </summary>
@@ -322,7 +326,7 @@ public class LogParserSettings
             "m_sInputFileName=["     + this.inputFileName + "]\n" +
             "m_sXMLExtention=["     + this.XmlExtension + "]\n" +
             "m_bAll=["                 + this.doAll.ToString() + "]\n" +
-            "m_sTzc=["                 + this.tzcName + "] " + this.tzcHours.ToString(CultureInfo.InvariantCulture) + " : " + this.tzcMinutes.ToString(CultureInfo.InvariantCulture) + "\n" +
+            // "m_sTzc=["                 + this.tzcName + "] " + this.tzcHours.ToString(CultureInfo.InvariantCulture) + " : " + this.tzcMinutes.ToString(CultureInfo.InvariantCulture) + "\n" +
             "m_bValidate=["         + this.doValidate.ToString() + "]\n" +
             "m_bGpxExt=["             + this.useGpxExt.ToString() + "]\n" +
             "m_bWaitConsole=["         + this.waitConsole.ToString() + "]\n" +

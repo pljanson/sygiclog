@@ -94,8 +94,8 @@ public class SygicLogFile
                 {
                     logStartTime = DateTime.ParseExact(this.fileNameWithoutExtension, "yyMMdd_HHmmss", new CultureInfo("en-US"));
                     
-                    logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
-                    logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
+                    // logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
+                    // logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
                     logfile.Logline("Corrected Start Time = " + logStartTime);
                 }
                 catch (FormatException)
@@ -259,18 +259,25 @@ public class SygicLogFile
                     }
                     
                     // String----start log point description-----------------x
-                    this.ReadWideString(logfile, reader, ref position, "startLogDescription");
+                    this.ReadWideString(ref logfile, reader, ref position, "startLogDescription");
                     
                     // String----end log point description--------x
-                    this.ReadWideString(logfile, reader, ref position, "endLogDescription");
+                    this.ReadWideString(ref logfile, reader, ref position, "endLogDescription");
                     
-                    // String----star time (version 4 or higher)------------------x
+                    // String----start time (version 4 or higher)------------------x
                     if (logfileVersion >= 4)
                     {
-                        this.mySettings.LogStartTime  = this.ReadWideString(logfile, reader, ref position, "startimeDescription YYMMDD_HHMMSS_OOO");
+                        this.mySettings.LogStartTime  = this.ReadWideString(ref logfile, reader, ref position, "startimeDescription YYMMDD_HHMMSS_OOO");
                         
                         // set the starttime by this value (in case logfiles have other names):
                         logStartTime = DateTime.ParseExact(this.mySettings.LogStartTime.Substring(0, 13), "yyMMdd_HHmmss", new CultureInfo("en-US"));
+
+                        int timeMinuteCorrection = 0;
+                        string correctMinutesString = this.mySettings.LogStartTime.Substring(14, 3);
+                        bool parseSuccess = int.TryParse(correctMinutesString, out timeMinuteCorrection);
+                        logStartTime = logStartTime.AddMinutes(timeMinuteCorrection);
+                        // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F] [140713_120341_-24]
+                        // 140713_120341 -24 min = 140713_113941                         
                     }
                                         
                     if ((logfileVersion >= 2) && (logfileVersion <= 4))
@@ -286,7 +293,7 @@ public class SygicLogFile
                     if (logfileVersion == 5)
                     {
                         // String----programmed destination description-----------------x
-                        this.ReadWideString(logfile, reader, ref position, "DestinationDescription");
+                        this.ReadWideString(ref logfile, reader, ref position, "DestinationDescription");
                                                 
                         // long end_lon: I think this is the longitude of the place where the log ends.
                         // long end_lat: I think this is the latitude of the place where the log ends.
@@ -560,7 +567,7 @@ public class SygicLogFile
                             break;
                         }
                     } // while
-                } // using
+                } // using               
             }
             catch (Exception exception)
             {
@@ -636,12 +643,12 @@ public class SygicLogFile
     /// <summary>
     /// Helper function to read the two byte integer, and log it to the log file 
     /// </summary>
-    /// <param name="log">the log file to log to</param>
+    /// <param name="log">the log file ref to log to</param>
     /// <param name="reader">the reader to read from</param>
-    /// <param name="position">the position within the input file</param>
+    /// <param name="position">the position ref within the input file</param>
     /// <param name="logString">additional log string</param>
     /// <returns>the constructed string</returns>
-    private string ReadWideString(LogFile log, BinaryReader reader, ref int position, string logString)
+    private string ReadWideString(ref LogFile log, BinaryReader reader, ref int position, string logString)
     {
         int length = reader.ReadInt16();
         position += 2;
@@ -649,7 +656,7 @@ public class SygicLogFile
         byte[] stringArray = reader.ReadBytes(length * 2); // UTF16 wchar string
         
         var mystring = Encoding.Unicode.GetString(stringArray);
-        log.Logline(logString + " p[" + position + "|" + position.ToString("X") + "]\t[" + mystring + "]");
+        log.Logline(logString + " p[" + position + "|" + position.ToString("X", CultureInfo.InvariantCulture) + "]\t[" + mystring + "]");
         
         position += length * 2;
         
