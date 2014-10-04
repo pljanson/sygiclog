@@ -57,8 +57,11 @@ public class LogFile
         // close the logfile
         if (this.enabled)
         {
-            // close the stream
-            this.writer.Close();
+        	if (this.writer != null)
+        	{
+            	// close the stream
+            	this.writer.Close();
+        	}
         }
     }
         
@@ -71,8 +74,6 @@ public class LogFile
         {
             return this.enabled;
         }
-        
-        // set {m_bEnabled = ValueType;}
     }
 
     /// <summary>

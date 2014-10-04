@@ -7,14 +7,16 @@
 /*
  * Program of Sygiclog reads a sygic log file and creates a gpx file from it.
  *
- * The Program part handles the commandline options and calls the library for
+ * The Program part handles the command line options and calls the library for
  * each file to be processed (by SygicLogFile.cs)
  *
  * Copyright (C) 2014, Paul Janson
  *
- * Version 1.5.0.rc2
+ * Version 1.5.0.rc3, add tcz and add unit tests GPXext 
  *
  * History
+ * 1.5.0.rc2 fixed time, removed tzc for now, Sygic 14.3.3 version 5 files
+ * 1.5.0.rc seams to work with Sygic 13.x version 5 files
  * 1.5.0beta updated for version 5 based on Lars's information; added version 2..5 unittests & test inputs
  * 1.4.0 added for all *.log files in this directory, refactor, TIMEZONE!
  * 1.3.2 start refactoring for unit tests
@@ -58,7 +60,7 @@ public static class SygicTravelbookLog
     /// <summary>
     /// The version string
     /// </summary>
-    public const string SygiclogVersionString = "Sygiclog v1.5.0rc2";
+    public const string SygiclogVersionString = "Sygiclog v1.5.0rc3";
 
     /// <summary>
     /// The command line manual
@@ -71,7 +73,7 @@ public static class SygicTravelbookLog
         Console.WriteLine("Usage: sygiclog.exe [log_file|all] [xml] [validate] [gpxext] [wait] [log]");
         Console.WriteLine("\t [log_file] the log file");
         Console.WriteLine("\t [all]      for all log files in this directory");
-        // Console.WriteLine("\t [tzcSHH:MM]   timezone correction. S Sign, H Hours, M Minutes ");
+        Console.WriteLine("\t [tzcSHH:MM]   timezone correction. S Sign, H Hours, M Minutes ");
         Console.WriteLine("\t [xml]      the gpx file will get the .gpx.xml extension");
         Console.WriteLine("\t [validate] validate the output file");
         Console.WriteLine("\t [gpxext]   use GPX extensions for additional data");
@@ -83,9 +85,9 @@ public static class SygicTravelbookLog
         Console.WriteLine("Example:");
         Console.WriteLine(@"sygiclog.exe .\travelbook.log");
         Console.WriteLine();
-        // Console.WriteLine("TZC Time Zone Correction:"); // parse the TZC
-        // Console.WriteLine("CET = UTC+1:00 So the TZC is -1:00! So tzc-1");
-        // Console.WriteLine("CET+DST = UTC+2:00 So the TZC is -2:00! So tzc-2");
+        Console.WriteLine("TZC Time Zone Correction:"); // parse the TZC
+        Console.WriteLine("CET = UTC+1:00 So the TZC is -1:00! So tzc-1");
+        Console.WriteLine("CET+DST = UTC+2:00 So the TZC is -2:00! So tzc-2");
     }
     
     /// <summary>
@@ -146,7 +148,6 @@ public static class SygicTravelbookLog
                         Console.Write("[all]  ");
                     }
 
-                    /*
                     if (args[argIdx].StartsWith("tzc", StringComparison.Ordinal))
                     {
                         Console.Write("[tzcSHH:MM]");
@@ -186,7 +187,7 @@ public static class SygicTravelbookLog
                             // Console.WriteLine(exception);
                         }
                     }
-                    */
+
                     if (args[argIdx] == "xml")
                     {
                         Console.Write("[xml]");
@@ -278,7 +279,7 @@ public static class SygicTravelbookLog
             if (settings.All)
             {
                 Console.WriteLine("number of logs parsed = " + filesParsed +
-                                  ",\t" + filesGood + " suceeded, \t"
+                                  ",\t" + filesGood + " succeeded, \t"
                                   + filesError + " Failed.");
             }
 

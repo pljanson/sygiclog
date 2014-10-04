@@ -6,7 +6,9 @@ road map
 1.5.0 final 
     . no complains or success after holiday tracks
 
-current  
+current
+RC3 tzc added, GPXext tests added
+rc2 v time fixed, tzc removed
 rc1
 	v cleanup code (fxcop stylecop)
 	. manual to github wiki

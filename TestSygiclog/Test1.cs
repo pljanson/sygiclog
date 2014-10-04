@@ -5,25 +5,9 @@
 //-----------------------------------------------------------------------
 /*
  * Created by SharpDevelop.
- * User: paul
- * Date: 29-6-2012 / 31-12-2013
- * Time: 14:17
+ * User: Paul Janson
+ * Date: 29-6-2012 / 31-12-2013 / 2-10-2014
  */
-
-namespace TestSygiclog
-{    
-    using System;
-    using System.Globalization; // Culture
-    using System.IO; // File Path
-    using NUnit.Framework;
-    using Sygiclog;   
-  
-    /// <summary>
-    /// Containing the first set of tests
-    /// </summary>
-    [TestFixture]
-    public class Test1
-    {
         // Usage : Add your test.
         // Assert.AreEqual( int expected, int actual, string message );
         // Assert.AreEqual( float expected, float actual, float tolerance, string message );
@@ -35,9 +19,21 @@ namespace TestSygiclog
         // Assert.IsNull( object anObject, string message );
         // Assert.IsNotNull( object anObject, string message );
         
-        //// Assert.Throws( Type expectedExceptionType, TestSnippet code, string message );
-                        
-        /// <summary>
+        // Assert.Throws( Type expectedExceptionType, TestSnippet code, string message );      
+         
+       
+namespace TestSygiclog
+{    
+    using NUnit.Framework;
+    using Sygiclog;   
+  
+     /// <summary>
+    /// Containing the first set of tests
+    /// </summary>
+    [TestFixture]
+    public class Support
+    {
+ 		/// <summary>
         /// Validate the LogParserSettings
         /// </summary>
         [Test]
@@ -50,9 +46,9 @@ namespace TestSygiclog
             Assert.AreEqual(string.Empty, settings.InputFileName, " settings.InputFileName = \"\" | string.empty ");
             Assert.AreEqual(".gpx", settings.XmlExtension, " settings.XMLExtention = \".gpx\" ");
             Assert.AreEqual(false, settings.All, " settings.All = false");
-            //Assert.AreEqual(string.Empty, settings.Tzc, " settings.Tzc =  = \"\" | string.empty ");
-            //Assert.AreEqual(0, settings.TzcHours, " settings.TzcHours = 0");
-            //Assert.AreEqual(0, settings.TzcMinutes, " settings.TzcMinutes = 0");
+            Assert.AreEqual(string.Empty, settings.Tzc, " settings.Tzc =  = \"\" | string.empty ");
+            Assert.AreEqual(0, settings.TzcHours, " settings.TzcHours = 0");
+            Assert.AreEqual(0, settings.TzcMinutes, " settings.TzcMinutes = 0");
             Assert.AreEqual(false, settings.Validate, " settings.Validate = false");
             Assert.AreEqual(false, settings.GpxExt, " settings.GpxExt = false");
             Assert.AreEqual(false, settings.WaitConsole, " settings.WaitConsole = false");
@@ -68,8 +64,8 @@ namespace TestSygiclog
             
             // settings ToComment
             string testString = settings.ToComment();
-            //Assert.AreEqual("\nm_sAppTitle=[testTitle]\nm_sInputFileName=[]\nm_sXMLExtention=[.gpx]\nm_bAll=[True]\nm_sTzc=[] 0 : 0\nm_bValidate=[False]\nm_bGpxExt=[False]\nm_bWaitConsole=[False]\nm_bTxtlog=[False]\nm_sLogStartTime=[]\n", testString, " settings.ToComment()");
-            Assert.AreEqual("\nm_sAppTitle=[testTitle]\nm_sInputFileName=[]\nm_sXMLExtention=[.gpx]\nm_bAll=[True]\nm_bValidate=[False]\nm_bGpxExt=[False]\nm_bWaitConsole=[False]\nm_bTxtlog=[False]\nm_sLogStartTime=[]\n", testString, " settings.ToComment()");
+            Assert.AreEqual("\nm_sAppTitle=[testTitle]\nm_sInputFileName=[]\nm_sXMLExtention=[.gpx]\nm_bAll=[True]\nm_sTzc=[] 0 : 0\nm_bValidate=[False]\nm_bGpxExt=[False]\nm_bWaitConsole=[False]\nm_bTxtlog=[False]\nm_sLogStartTime=[]\n", testString, " settings.ToComment()");
+            //Assert.AreEqual("\nm_sAppTitle=[testTitle]\nm_sInputFileName=[]\nm_sXMLExtention=[.gpx]\nm_bAll=[True]\nm_bValidate=[False]\nm_bGpxExt=[False]\nm_bWaitConsole=[False]\nm_bTxtlog=[False]\nm_sLogStartTime=[]\n", testString, " settings.ToComment()");
         } // LogParserSettings
         
         /// <summary>
@@ -78,7 +74,7 @@ namespace TestSygiclog
         [Test]
         public static void SygicTravelbookLog()
         {
-            Assert.AreEqual("Sygiclog v1.5.0rc2", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
+            Assert.AreEqual("Sygiclog v1.5.0rc3", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
             
             // TODO doUsage()
         }
@@ -114,8 +110,16 @@ namespace TestSygiclog
             
             logfile.Close();
             logfile2.Close();
-        } // LogFile
-        
+        } // LogFile    	
+    	
+    }
+    
+    /// <summary>
+    /// Containing the first set of tests
+    /// </summary>
+    [TestFixture]
+    public class Test1
+    {
         /// <summary>
         /// Testing version 2 binary log files
         /// </summary>
@@ -139,7 +143,7 @@ namespace TestSygiclog
                     Assert.AreEqual(2, validatelogfile.LogFileVersion, "version == 2");
                     Assert.AreEqual(761, validatelogfile.Trkpts, "trkpt == 761");
 
-                    Assert.AreEqual("28-5-2012 11:48:12", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 28-5-2012 11:48:12
+                    Assert.AreEqual("28-5-2012 11:48:12", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 28-5-2012 11:48:12
                     Assert.AreEqual("[CV-502  Cullera]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]	[CV-502  Cullera]
                     Assert.AreEqual("[Avenida de la Gola del Puchol  Valencia]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[59|3B]	[Avenida de la Gola del Puchol  Valencia]
 
@@ -153,6 +157,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120528_114812.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(761, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-05-28T11:48:12", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-0.24582, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(39.20774, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -172,7 +193,7 @@ namespace TestSygiclog
                     Assert.AreEqual(2, validatelogfile.LogFileVersion, "version == 2");
                     Assert.AreEqual(662, validatelogfile.Trkpts, "trkpt == 662");
                     
-                    Assert.AreEqual("30-5-2012 9:05:14", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 30-5-2012 9:05:14
+                    Assert.AreEqual("30-5-2012 9:05:14", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 30-5-2012 9:05:14
                     Assert.AreEqual("[Estación de Tamarit 28/53  Moncofa]", validatelogfile.StartLogDescription, "StartLogDescription == "); //startLogDescription p[27|1B]	[Estación de Tamarit 28/53  Moncofa]
                     Assert.AreEqual("[Avenida Mallorca 134/101  Nules]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[97|61]	[Avenida Mallorca 134/101  Nules]
 
@@ -186,6 +207,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120530_090514.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(662, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-05-30T09:05:14", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-0.13911, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(39.78890, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -205,7 +243,7 @@ namespace TestSygiclog
                     Assert.AreEqual(2, validatelogfile.LogFileVersion, "version == 2");
                     Assert.AreEqual(8967, validatelogfile.Trkpts, "trkpt == 8967");
 
-                    Assert.AreEqual("15-7-2011 7:53:30", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 15-7-2011 7:53:30
+                    Assert.AreEqual("15-7-2011 7:53:30", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 15-7-2011 7:53:30
                     Assert.AreEqual("[Tongelresestraat 423/-  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]	[Tongelresestraat 423/-  Eindhoven]
                     Assert.AreEqual("[Grensstraat -/1  Veurne]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[95|5F]	[Grensstraat -/1  Veurne]
                 
@@ -220,6 +258,24 @@ namespace TestSygiclog
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
                 }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\110715_075330.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(8967, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2011-07-15T07:53:30", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.51317, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(51.44420, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
+                }
+
             }
         } // SygicLogFileV2
         
@@ -248,7 +304,7 @@ namespace TestSygiclog
                     Assert.AreEqual(3, validatelogfile.LogFileVersion, "version == 3");
                     Assert.AreEqual(1592, validatelogfile.Trkpts, "trkpt == 1592");
 
-                    Assert.AreEqual("20-5-2012 11:39:17", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 20-5-2012 11:39:17
+                    Assert.AreEqual("20-5-2012 11:39:17", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 20-5-2012 11:39:17
                     Assert.AreEqual("[Terno d'Isola]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]	[Terno d'Isola]
                     Assert.AreEqual("[Tangenziale Est  Vimercate]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[55|37]	[Tangenziale Est  Vimercate]
 
@@ -262,6 +318,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120520_113917.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(1592, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-05-20T11:39:17", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(9.52659, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(45.68400, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -280,7 +353,7 @@ namespace TestSygiclog
                     Assert.AreEqual(3, validatelogfile.LogFileVersion, "version == 3");
                     Assert.AreEqual(58, validatelogfile.Trkpts, "trkpt == 58");
 
-                    Assert.AreEqual("17-7-2012 13:57:55", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 17-7-2012 13:57:55
+                    Assert.AreEqual("17-7-2012 13:57:55", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 17-7-2012 13:57:55
                     Assert.AreEqual("[E20  Malmö]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]	[E20  Malmö]
                     Assert.AreEqual("[E20  Malmö]", validatelogfile.EndLogDescription, "EndLogDescription == "); // startLogDescription p[27|1B]	[E20  Malmö]
                 
@@ -294,6 +367,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120717_135755.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(58, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-07-17T13:57:55", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(12.96869, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(55.54679, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -312,7 +402,7 @@ namespace TestSygiclog
                     Assert.AreEqual(3, validatelogfile.LogFileVersion, "version == 3");
                     Assert.AreEqual(286, validatelogfile.Trkpts, "trkpt == 286");
 
-                    Assert.AreEqual("13-4-2012 7:47:38", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 13-4-2012 7:47:38
+                    Assert.AreEqual("13-4-2012 7:47:38", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 13-4-2012 7:47:38
                     Assert.AreEqual("[Collse Hoefdijk  Nuenen, Gerwen en Nederwetten]", validatelogfile.StartLogDescription, "StartLogDescription == "); //startLogDescription p[27|1B]	[Collse Hoefdijk  Nuenen, Gerwen en Nederwetten]
                     Assert.AreEqual("[N270  Helmond]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[121|79]	[N270  Helmond]
 
@@ -326,6 +416,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120413_074738.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(286, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-04-13T07:47:38", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.55930, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(51.46032, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
         } // SygicLogFileV3
@@ -352,7 +459,7 @@ namespace TestSygiclog
                     Assert.AreEqual(4, validatelogfile.LogFileVersion, "version == 4");
                     Assert.AreEqual(50, validatelogfile.Trkpts, "trkpt == 50");
 
-                    Assert.AreEqual("1-8-2012 8:31:58", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 1-8-2012 8:31:58
+                    Assert.AreEqual("1-8-2012 8:31:58", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 1-8-2012 8:31:58
                     Assert.AreEqual("[Sønderjyske Motorvej  Vojens]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Sønderjyske Motorvej  Vojens]
                     Assert.AreEqual("[Sønderjyske Motorvej  Vojens]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[81|51]	[Sønderjyske Motorvej  Vojens]
 
@@ -366,6 +473,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120801_083158.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(50, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-08-01T08:31:58", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(9.39019, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(55.23712, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -384,7 +508,7 @@ namespace TestSygiclog
                     Assert.AreEqual(4, validatelogfile.LogFileVersion, "version == 4");
                     Assert.AreEqual(1795, validatelogfile.Trkpts, "trkpt == 1795");
 
-                    Assert.AreEqual("30-7-2012 14:19:48", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 30-7-2012 14:19:48
+                    Assert.AreEqual("30-7-2012 14:19:48", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 30-7-2012 14:19:48
                     Assert.AreEqual("[Växjö]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Växjö]
                     Assert.AreEqual("[23  Grimslöv]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[35|23]	[23  Grimslöv]
 
@@ -398,6 +522,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\120730_141948.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(1795, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2012-07-30T14:19:48", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(14.80059, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(56.88045, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
         } // SygicLogFileV4
@@ -425,7 +566,7 @@ namespace TestSygiclog
                     Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
                     Assert.AreEqual(797, validatelogfile.Trkpts, "trkpt == 797");
 
-                    Assert.AreEqual("29-7-2013 9:16:49", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 29-7-2013 9:16:49
+                    Assert.AreEqual("29-7-2013 9:16:49", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 29-7-2013 9:16:49
                     Assert.AreEqual("[Tongelresestraat 423/-  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Tongelresestraat 423/-  Eindhoven]
                     Assert.AreEqual("[Middenweg 235/224  Venlo]", validatelogfile.EndLogDescription, "EndLogDescription == "); //endLogDescription p[91|5B]	[Middenweg 235/224  Venlo]
 
@@ -439,6 +580,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\130729_091649.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(797, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2013-07-29T09:16:49", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.51283, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(51.44429, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -457,7 +615,7 @@ namespace TestSygiclog
                     Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
                     Assert.AreEqual(806, validatelogfile.Trkpts, "trkpt == 806");
 
-                    Assert.AreEqual("31-12-2013 16:43:56", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 31-12-2013 16:43:56
+                    Assert.AreEqual("31-12-2013 16:43:57", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 31-12-2013 16:43:56
                     Assert.AreEqual("[Kawoepersteeg 21/24  Ermelo]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Kawoepersteeg 21/24  Ermelo]
                     Assert.AreEqual("[Looweg 15/10  Ermelo]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[79|4F]	[Looweg 15/10  Ermelo]
 
@@ -471,6 +629,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\131231_164356.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(806, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2013-12-31T16:43:57", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.59696, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(52.30596, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
                        
@@ -489,13 +664,33 @@ namespace TestSygiclog
                     Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
                     Assert.AreEqual(559, validatelogfile.Trkpts, "trkpt == 559");
                     
-                    Assert.AreEqual("16-6-2014 17:50:53", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time =
+                    Assert.AreEqual("16-6-2014 17:50:53", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time =
                     Assert.AreEqual("[Hofstraat 125/-  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]
                     Assert.AreEqual("[Tongelresestraat 425/-  Eindhoven]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[49|31]
+
+                    Assert.AreEqual(551067, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	550383	p[191|00bf]:EF-65-08-00
+                    Assert.AreEqual(5144561, validatelogfile.TP1Latitude, "TP1 latitude = ");//latitude = 	5144251	p[195|00c3]:BB-7E-4E-00                
                 }
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140616_175053.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(559, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-06-16T17:50:53", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.51067, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(51.44561, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -513,7 +708,7 @@ namespace TestSygiclog
                     Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
                     Assert.AreEqual(5336, validatelogfile.Trkpts, "trkpt == 5336");
 
-                    Assert.AreEqual("22-9-2014 7:11:38", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 22-9-2014 7:11:38
+                    Assert.AreEqual("22-9-2014 7:11:42", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 22-9-2014 7:11:38
                     Assert.AreEqual("[Insulindelaan  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
                     Assert.AreEqual("[Nieuwleusenerdijk  Zwolle]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
              
@@ -527,6 +722,23 @@ namespace TestSygiclog
                 else
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140922_071138.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(5336, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-09-22T07:11:42", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(5.50383, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(51.44251, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
             
@@ -544,7 +756,7 @@ namespace TestSygiclog
                     Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
                     Assert.AreEqual(1545, validatelogfile.Trkpts, "trkpt == 1545");
 
-                    Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.CorrectedStartTime, "Corrected Start Tim == "); // Corrected Start Time = 13-9-2014 11:39:41
+                    Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 13-9-2014 11:39:41
                     Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
                     Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
@@ -558,317 +770,222 @@ namespace TestSygiclog
                 {
                     Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
                 }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140713_113941.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(1545, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-07-13T11:39:41", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-74.15324, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(40.08155, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
+                }
             }
-
-
         } // SygicLogFileV5
-        
-        // --- start inner helper class -----------------
-        
+    }
+     /// </summary>
+    [TestFixture]
+    public class TZC
+    {
         /// <summary>
-        /// Reads the log file provides the "features" for unit test validation
+        /// Testing the tzc time code correction with positive values
         /// </summary>
-        private class ValidateLogFile
+        [Test]
+        public static void tzcTestsPositive()
         {
-            /// <summary>
-            /// indicate if the validation passed
-            /// </summary>
-            private bool passed;
-            
-            /// <summary>
-            /// contains a possible error string
-            /// </summary>
-            private string error;
-            
-            /// <summary>
-            /// contains the log file version
-            /// </summary>
-            private int logFileVersion;
-            
-            /// <summary>
-            /// Contains the number of found track points
-            /// </summary>
-            private int trkpts;
-            
-            /// <summary>
-            /// Contains the corrected start time string
-            /// </summary>
-            private string corStartTimeString;
-            
-            /// <summary>
-            /// Contains the start place description
-            /// </summary>
-            private string startLogDescription;
-            
-            /// <summary>
-            /// Contains the end place description
-            /// </summary>
-            private string endLogDescription;
+            // a [tzc1:30] positive time code correction
+            // 11:39:41 + 1:30 = 13:09:41
+            //140713_113941.log  sygic 14.* Route 88 1407/1406  Lakewood - Route 9 532/533  Ocean</name><LookAt><longitude>-74.153236</longitude><latitude>40.081551</latitude></LookAt>
+            {
+                LogParserSettings settings = new LogParserSettings();
+                settings.InputFileName = "..\\..\\..\\TESTlogs\\140713_113941.log";
+                settings.TxtLog = true;
+                settings.Tzc = "1:00";
+                settings.TzcHours = 1;
+                settings.TzcMinutes = 30;
+                SygicLogFile sygicLogFile = new SygicLogFile(settings);
+                Assert.AreEqual(true, sygicLogFile.Parse(), "parse");
+                ValidateLogFile validatelogfile = new ValidateLogFile(settings.InputFileName);
+                if (validatelogfile.Passed)
+                {
+                    // validate in the log file
+                    Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
+                    Assert.AreEqual(1545, validatelogfile.Trkpts, "trkpt == 1545");
 
-            /// <summary>
-            /// Contains the start time Description string
-            /// </summary>
-            private string startTimeDescriptionString;
+                    Assert.AreEqual("13-7-2014 13:09:41", validatelogfile.CorrectedStartTime, "Corrected Start Time == ");
+                        // Corrected Start Time = 13-9-2014 13:09:41
+                    Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription,
+                        "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
+                    Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription,
+                        "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-            /* Get first track point data:               
-            >>>>  longitude	altitude	elevation	time	speed
-            longitude = 	550383	p[191|00bf]:EF-65-08-00
-            latitude = 	5144251	p[195|00c3]:BB-7E-4E-00
-            elevation = 	67	p[199|00c7]:43-00-00-00
-            pointStepTime = 	0	p[203|00cb]:00-00-00-00
-            Time = 22-9-2014 5:11:42
-            speed = 57.2	1113902285	p[207|00cf]:CD-CC-64-42
-            signalQuality = 	3	p[211|00d3]:03
-            speeding = 	0	p[212|00d4]:00
-            gsmSignalQuality = 	255	p[213|00d5]:FF
-            internetSignalQuality = 	0	p[214|00d6]:00
-            batteryStatus = 	255	p[215|00d7]:FF                                         
-             */
-            private long tp1Latitude;
-            private long tp1Longitude;
-            private string stp1Time;
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString,
+                        "Start Time Description == ");
+                        // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("13-7-2014 13:09:41", validatelogfile.TP1Time, "TP1 Time = ");
+                        // Time = 13-7-2014 13:09:41
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ValidateLogFile" /> class.
-            /// The constructor opens the txt log file and loops it to find all features in one go.
-            /// If the file could not be opened _enabled is false and _error contains the error message.
-            /// </summary>
-            /// <param name="fullLogFilename">The full text log file name with extension</param>
-            public ValidateLogFile(string fullLogFilename)
-            {
-                TextReader m_reader;                    
-                string logfilename = Path.GetFileNameWithoutExtension(fullLogFilename);
-                
-                try
+                    Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");
+                        //longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
+                    Assert.AreEqual(4008155, validatelogfile.TP1Latitude, "TP1 latitude = ");
+                        //latitude = 	4008155	p[223|00df]:DB-28-3D-00
+                }
+                else
                 {
-                    m_reader = new StreamReader(logfilename + ".txt");
-                    this.passed = true;
-                    this.error = string.Empty;
+                    Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
 
-                    bool bHeader = true;
-                    bool bNowTP1 = false;
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140713_113941.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
 
-                    if (this.passed)
-                    {
-                        string readline = m_reader.ReadLine();
-                        while (readline != null)
-                        {
-                            if (bHeader)
-                            {
-                                if (readline.StartsWith("version =", StringComparison.Ordinal))
-                                {
-                                    string sversion = readline.Substring(10);
-                                    this.logFileVersion = Convert.ToInt16(sversion,
-                                        CultureInfo.InvariantCulture.NumberFormat);
-                                }                               
-                                else if (readline.StartsWith("Corrected Start Time = ", StringComparison.Ordinal))
-                                {
-                                    // Corrected Start Time = 17-7-2012 13:57:55
-                                    this.corStartTimeString = readline.Substring(23);
-                                }
-                                else if (readline.StartsWith("startLogDescription p[", StringComparison.Ordinal))
-                                {
-                                    // startLogDescription p[27|1B]    [E20  Malmö]
-                                    string scutoff = readline.Substring(23);
-                                    int idx = scutoff.IndexOf('[');
-                                    this.startLogDescription = scutoff.Substring(idx);
-                                }
-                                else if (readline.StartsWith("endLogDescription p[", StringComparison.Ordinal))
-                                {
-                                    // endLogDescription p[49|31]    [E20  Malmö]
-                                    string scutoff = readline.Substring(21);
-                                    int idx = scutoff.IndexOf('[');
-                                    this.endLogDescription = scutoff.Substring(idx);
-                                }
-                                    //startTimeDescriptionString
-                                else if (readline.StartsWith("startimeDescription YYMMDD_HHMMSS_OOO p[",
-                                    StringComparison.Ordinal))
-                                {
-                                    // startimeDescription YYMMDD_HHMMSS_OOO p[125|7D]	[140922_051142_120]
-                                    string scutoff = readline.Substring(40);
-                                    int idx = scutoff.IndexOf('[');
-                                    this.startTimeDescriptionString = scutoff.Substring(idx);
+                    Assert.AreEqual(1545, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-07-13T13:09:41", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-74.15324, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(40.08155, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
 
-                                }
-                                else if (readline.StartsWith(">>>>  longitude	altitude", StringComparison.Ordinal))
-                                {                                    
-                                    //Start of first track point found, next line for track point
-                                    bHeader = false;
-                                    bNowTP1 = true;
-                                }
-                            }
-                            else if (bNowTP1)
-                            {
-                                if (readline.StartsWith("\tTime = ", StringComparison.Ordinal)) // Time = 22-9-2014 5:11:42
-                                {
-                                    this.stp1Time = readline.Substring(8);
-                                }
-                                else if (readline.StartsWith("\tlongitude =", StringComparison.Ordinal))
-                                {
-                                    //longitude = 	550383	p[191|00bf]:EF-65-08-00   
-                                    string scutoff = readline.Substring(13);
-                                    int idx = scutoff.IndexOf('p');
-                                    string scutout = scutoff.Substring(0,idx);
-                                    this.tp1Longitude = Convert.ToInt32(scutout,
-                                        CultureInfo.InvariantCulture.NumberFormat);
-                                }
-                                else if (readline.StartsWith("\tlatitude =", StringComparison.Ordinal))
-                                {
-                                    //latitude = 	5144251	p[195|00c3]:BB-7E-4E-00
-                                    string scutoff = readline.Substring(11);
-                                    int idx = scutoff.IndexOf('p');
-                                    string scutout = scutoff.Substring(0, idx);
-                                    this.tp1Latitude = Convert.ToInt32(scutout,
-                                        CultureInfo.InvariantCulture.NumberFormat);
-                                }
-                                else if (readline.StartsWith(">>>>", StringComparison.Ordinal))
-                                {
-                                    //next track point found!
-                                    bNowTP1 = false;
-                                }
-                            }
-                            else if (readline.StartsWith("wrote trkpt : ", StringComparison.Ordinal))
-                            {
-                                string strkpt = readline.Substring(14);
-                                this.trkpts = Convert.ToInt16(strkpt, CultureInfo.InvariantCulture.NumberFormat);
-                            }
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
+                }
+            }
+        }
+    //}
+    // / </summary>
+    //[TestFixture]
+    //public class TZCNegative
+    //{
+        /// <summary>
+        /// Testing the tzc time code correction with negative values
+        /// </summary>
+        [Test]
+        public static void tzcTestsNegative()
+        {
+            // a [tzc-2:45] negative timecode correction
+            // 11:39:41  -2:45 = 08:54:41
+            //140713_113941.log  sygic 14.* Route 88 1407/1406  Lakewood - Route 9 532/533  Ocean</name><LookAt><longitude>-74.153236</longitude><latitude>40.081551</latitude></LookAt>
+            {
+                LogParserSettings settings = new LogParserSettings();
+                settings.InputFileName = "..\\..\\..\\TESTlogs\\140713_113941.log";
+                settings.TxtLog = true;
+                settings.Tzc = "-2:45";
+                settings.TzcHours = -2;
+                settings.TzcMinutes = -45;
+                SygicLogFile sygicLogFile = new SygicLogFile(settings);
+                Assert.AreEqual(true, sygicLogFile.Parse(), "parse");
+                ValidateLogFile validatelogfile = new ValidateLogFile(settings.InputFileName);
+                if (validatelogfile.Passed)
+                {
+                    // validate in the log file
+                    Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
+                    Assert.AreEqual(1545, validatelogfile.Trkpts, "trkpt == 1545");
 
-                            // read next line
-                            readline = m_reader.ReadLine();
-                        }
-                    }
-                }
-                catch (System.IO.FileNotFoundException e)
-                {
-                    Console.WriteLine("logfilename not found:" + e.Message);
-                    m_reader = null;
-                    this.passed = false;
-                    this.error = e.Message;
-                }
-            } // ValidateLogFile constructor reader
-            
-            /// <summary>
-            /// Gets a value indicating whether the validation passed.
-            /// </summary>
-            public bool Passed
-            {
-                get
-                {
-                    return this.passed;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the error text incase the validation didn't pass.
-            /// </summary>
-            public string Error
-            {
-                get
-                {
-                    return this.error;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the found log file version number
-            /// </summary>
-            public int LogFileVersion
-            {
-                get
-                {
-                    return this.logFileVersion;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the found number of track points
-            /// </summary>
-            public int Trkpts
-            {
-                get
-                {
-                    return this.trkpts;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the found correct time string
-            /// </summary>
-            public string CorrectedStartTime
-            {
-                get
-                {
-                    return this.corStartTimeString;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the found location start description
-            /// </summary>
-            public string StartLogDescription
-            {
-                get
-                {
-                    return this.startLogDescription;
-                }
-            }
-            
-            /// <summary>
-            /// Gets the found location end description
-            /// </summary>
-            public string EndLogDescription
-            {
-                get
-                {
-                    return this.endLogDescription;
-                }
-            }
+                    Assert.AreEqual("13-7-2014 8:54:41", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 13-9-2014 11:39:41
+                    Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
+                    Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-            /// <summary>
-            /// Gets the found startimeDescription
-            /// </summary>
-            public string StartTimeDescriptionString
-            {
-                get
-                {
-                    return this.startTimeDescriptionString;
-                }
-            }
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("13-7-2014 8:54:41", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
 
-            //--TP1----------
-            /// <summary>
-            /// Gets the found startimeDescription
-            /// </summary>
-            public long TP1Latitude
-            {
-                get
+                    Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
+                    Assert.AreEqual(4008155, validatelogfile.TP1Latitude, "TP1 latitude = ");//latitude = 	4008155	p[223|00df]:DB-28-3D-00
+                }
+                else
                 {
-                    return this.tp1Latitude;
+                    Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140713_113941.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(1545, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-07-13T08:54:41", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-74.15324, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(40.08155, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
-            /// <summary>
-            /// Gets the found startimeDescription
-            /// </summary>
-            public long TP1Longitude
+        }
+    }
+     /// </summary>
+    [TestFixture]
+    public class GPXextention
+    {
+        /// <summary>
+        /// Testing the GPXext exporting with the speed
+        /// </summary>
+        [Test]
+        public static void GPXext()
+        {
+            //140713_113941.log  sygic 14.* Route 88 1407/1406  Lakewood - Route 9 532/533  Ocean</name><LookAt><longitude>-74.153236</longitude><latitude>40.081551</latitude></LookAt>
             {
-                get
+                LogParserSettings settings = new LogParserSettings();
+                settings.InputFileName = "..\\..\\..\\TESTlogs\\140713_113941.log";
+                settings.TxtLog = true;
+                settings.GpxExt = true; //m_bGpxExt=[True]
+                SygicLogFile sygicLogFile = new SygicLogFile(settings);
+                Assert.AreEqual(true, sygicLogFile.Parse(), "parse");
+                ValidateLogFile validatelogfile = new ValidateLogFile(settings.InputFileName);
+                if (validatelogfile.Passed)
                 {
-                    return this.tp1Longitude;
+                    // validate in the log file
+                    Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
+                    Assert.AreEqual(1545, validatelogfile.Trkpts, "trkpt == 1545");
+
+                    Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 13-9-2014 11:39:41
+                    Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
+                    Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
+
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
+
+                    Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
+                    Assert.AreEqual(4008155, validatelogfile.TP1Latitude, "TP1 latitude = ");//latitude = 	4008155	p[223|00df]:DB-28-3D-00
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validatelogfile.Error, "validate log error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\140713_113941.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(true, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    //<trkpt lat="40.08155" lon="-74.15324">
+				    //<ele>-33</ele>
+				    //<time>2014-07-13T11:39:41</time>
+
+                    Assert.AreEqual(77, validateGpxFile.FirstTrackpointSpeed(), "trackpoint speed");                    
+                    Assert.AreEqual(1545, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-07-13T11:39:41", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(-74.15324, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(40.08155, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+                    
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
-            /// <summary>
-            /// Gets the found startimeDescription
-            /// </summary>
-            public string TP1Time
-            {
-                get
-                {
-                    return this.stp1Time;
-                }
-            }
-            
-        } // class ValidateLogFile
-        
-        // --- end inner helper class -----
+        }
     }
 }

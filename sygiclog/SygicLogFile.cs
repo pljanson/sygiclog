@@ -84,19 +84,19 @@ public class SygicLogFile
                     
             // create with object from the xsd:
             // gpxType mygpx = new gpxType();
-            LogFile logfile = new LogFile(this.mySettings.TxtLog, this.fileNameWithoutExtension + ".txt");
-
+           
             try
             {
+            	LogFile logfile = new LogFile(this.mySettings.TxtLog, this.fileNameWithoutExtension + ".txt");
                 logfile.Logline(this.mySettings.ToComment());
                 
                 try
                 {
                     logStartTime = DateTime.ParseExact(this.fileNameWithoutExtension, "yyMMdd_HHmmss", new CultureInfo("en-US"));
                     
-                    // logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
-                    // logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
-                    logfile.Logline("Corrected Start Time = " + logStartTime);
+                    logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
+                    logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
+                    // logfile.Logline("Corrected Start Time = " + logStartTime);
                 }
                 catch (FormatException)
                 {
@@ -267,22 +267,32 @@ public class SygicLogFile
                     // String----start time (version 4 or higher)------------------x
                     if (logfileVersion >= 4)
                     {
-                        this.mySettings.LogStartTime  = this.ReadWideString(ref logfile, reader, ref position, "startimeDescription YYMMDD_HHMMSS_OOO");
-                        
+                        this.mySettings.LogStartTime = this.ReadWideString(ref logfile, reader, ref position,
+                            "startimeDescription YYMMDD_HHMMSS_OOO");
+
                         // set the starttime by this value (in case logfiles have other names):
-                        logStartTime = DateTime.ParseExact(this.mySettings.LogStartTime.Substring(0, 13), "yyMMdd_HHmmss", new CultureInfo("en-US"));
+                        logStartTime = DateTime.ParseExact(this.mySettings.LogStartTime.Substring(0, 13),
+                            "yyMMdd_HHmmss", new CultureInfo("en-US"));
 
                         int timeMinuteCorrection = 0;
                         string correctMinutesString = this.mySettings.LogStartTime.Substring(14, 3);
                         bool parseSuccess = int.TryParse(correctMinutesString, out timeMinuteCorrection);
                         logStartTime = logStartTime.AddMinutes(timeMinuteCorrection);
                         // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F] [140713_120341_-24]
-                        // 140713_120341 -24 min = 140713_113941                         
+                        // 140713_120341 -24 min = 140713_113941     
+
+                        logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
+                        logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
+                        logfile.Logline("Corrected Start Time = " + logStartTime);
                     }
-                                        
+                    else
+                    {
+                        logfile.Logline("Corrected Start Time = " + logStartTime);
+                    }
+
                     if ((logfileVersion >= 2) && (logfileVersion <= 4))
                     {
-                        // What would be contained as 4 bytes in this locatoin?                                                
+                        // What would be contained as 4 bytes in this location?                                                
                         reader.ReadByte(); // byte1
                         reader.ReadByte(); // byte2
                         reader.ReadByte(); // byte3
@@ -567,7 +577,12 @@ public class SygicLogFile
                             break;
                         }
                     } // while
-                } // using               
+                } // using
+
+            	// close log            	
+            	logfile.Logline("wrote trkpt : " + trackPoints);
+            	logfile.Logline("The End!\n");
+            	logfile.Close();                
             }
             catch (Exception exception)
             {
@@ -581,11 +596,6 @@ public class SygicLogFile
             xmlWriter.WriteEndDocument();  // Ends the document.
             xmlWriter.Close();             // close xml writer
 
-            logfile.Logline("wrote trkpt : " + trackPoints);
-            logfile.Logline("The End!\n");
-
-            // close log
-            logfile.Close();
         }
         catch (Exception exception)
         {
