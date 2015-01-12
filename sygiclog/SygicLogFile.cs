@@ -87,8 +87,8 @@ public class SygicLogFile
            
             try
             {
-            	LogFile logfile = new LogFile(this.mySettings.TxtLog, this.fileNameWithoutExtension + ".txt");
-                logfile.Logline(this.mySettings.ToComment());
+            	LogFile txtlogfile = new LogFile(this.mySettings.TxtLog, this.fileNameWithoutExtension + ".txt");
+                txtlogfile.Logline(this.mySettings.ToComment());
                 
                 try
                 {
@@ -102,7 +102,7 @@ public class SygicLogFile
                 {
                     // it stays the MinValue
                     // Console.WriteLine("no time in filename: " + exception);
-                    logfile.Logline("No filename based time");
+                    txtlogfile.Logline("No filename based time");
                 }
                 
                 using (BinaryReader reader = new BinaryReader(File.Open(this.mySettings.InputFileName, FileMode.Open)))
@@ -157,7 +157,7 @@ public class SygicLogFile
                     byte byte04 = reader.ReadByte();
 
                     // log4Bytes(position, byte01, byte02, byte03, byte04);
-                    logfile.Log4Bytes("version STR = ", position, byte01, byte02, byte03, byte04);
+                    txtlogfile.Log4Bytes("version STR = ", position, byte01, byte02, byte03, byte04);
                     position += 4;
                     
                     if ((byte03 == 0x52) && (byte04 == 0x54))
@@ -197,33 +197,33 @@ public class SygicLogFile
                             {
                                 // not a valid version
                                 string versionstring = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}", (char)byte01, (char)byte02, (char)byte03, (char)byte04);
-                                logfile.Logline("unknown version str =\t " + versionstring); 
+                                txtlogfile.Logline("unknown version str =\t " + versionstring); 
                             }
                         }
                         else
                         {
                             // not a valid version
                             string versionstring = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}", (char)byte01, (char)byte02, (char)byte03, (char)byte04);
-                            logfile.Logline("unknown version str =\t " + versionstring);
+                            txtlogfile.Logline("unknown version str =\t " + versionstring);
                         }
                     }
                     else
                     {
                         // not a valid version
                         string versionstring = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}", (char)byte01, (char)byte02, (char)byte03, (char)byte04);
-                        logfile.Logline("unknown version str =\t " + versionstring);
+                        txtlogfile.Logline("unknown version str =\t " + versionstring);
                     }
 
-                    logfile.Logline("version =\t " + logfileVersion);
+                    txtlogfile.Logline("version =\t " + logfileVersion);
 
                     // INT----favorite-----------------------------4
                     int favorite = reader.ReadInt32();
-                    logfile.Log32("favorite = ", position, favorite);
+                    txtlogfile.Log32("favorite = ", position, favorite);
                     position += 4;
 
                     // BYTE----log type-----------------------------1
                     byte logType = reader.ReadByte();
-                    logfile.LogByte("logType = ", position, logType);
+                    txtlogfile.LogByte("logType = ", position, logType);
                     position += 1;
 
                     // if (logfileVersion >= 3)
@@ -232,20 +232,20 @@ public class SygicLogFile
                         // DWORD----log start time (version 3 or higher)-----------4
                         int readStartTime = reader.ReadInt32();
     
-                        logfile.Log32("logStartTime = ", position, readStartTime);
+                        txtlogfile.Log32("logStartTime = ", position, readStartTime);
                         position += 4;
                     }
 
                     // DWORD----log duration---------------------------------4
                     int logDuration = reader.ReadInt32();
 
-                    logfile.Log32("logDuration = ", position, logDuration);
+                    txtlogfile.Log32("logDuration = ", position, logDuration);
                     position += 4;
 
                     // DWORD----log length-----------------------------------4
                     int logLength = reader.ReadInt32();
 
-                    logfile.Log32("logLength = ", position, logLength);
+                    txtlogfile.Log32("logLength = ", position, logLength);
                     position += 4;
 
                     // DWORD----last mark distance---------------------------4
@@ -254,20 +254,20 @@ public class SygicLogFile
                     {
                         int lastMarkDistance = reader.ReadInt32();
 
-                        logfile.Log32("lastMarkDistance = ", position, lastMarkDistance);
+                        txtlogfile.Log32("lastMarkDistance = ", position, lastMarkDistance);
                         position += 4;
                     }
                     
                     // String----start log point description-----------------x
-                    this.ReadWideString(ref logfile, reader, ref position, "startLogDescription");
+                    this.ReadWideString(ref txtlogfile, reader, ref position, "startLogDescription");
                     
                     // String----end log point description--------x
-                    this.ReadWideString(ref logfile, reader, ref position, "endLogDescription");
+                    this.ReadWideString(ref txtlogfile, reader, ref position, "endLogDescription");
                     
                     // String----start time (version 4 or higher)------------------x
                     if (logfileVersion >= 4)
                     {
-                        this.mySettings.LogStartTime = this.ReadWideString(ref logfile, reader, ref position,
+                        this.mySettings.LogStartTime = this.ReadWideString(ref txtlogfile, reader, ref position,
                             "startimeDescription YYMMDD_HHMMSS_OOO");
 
                         // set the starttime by this value (in case logfiles have other names):
@@ -283,11 +283,11 @@ public class SygicLogFile
 
                         logStartTime = logStartTime.AddHours(this.mySettings.TzcHours);
                         logStartTime = logStartTime.AddMinutes(this.mySettings.TzcMinutes);
-                        logfile.Logline("Corrected Start Time = " + logStartTime);
+                        txtlogfile.Logline("Corrected Start Time = " + logStartTime);
                     }
                     else
                     {
-                        logfile.Logline("Corrected Start Time = " + logStartTime);
+                        txtlogfile.Logline("Corrected Start Time = " + logStartTime);
                     }
 
                     if ((logfileVersion >= 2) && (logfileVersion <= 4))
@@ -303,29 +303,29 @@ public class SygicLogFile
                     if (logfileVersion == 5)
                     {
                         // String----programmed destination description-----------------x
-                        this.ReadWideString(ref logfile, reader, ref position, "DestinationDescription");
+                        this.ReadWideString(ref txtlogfile, reader, ref position, "DestinationDescription");
                                                 
                         // long end_lon: I think this is the longitude of the place where the log ends.
                         // long end_lat: I think this is the latitude of the place where the log ends.
                         // long point_count: number of points in the log.
                         int end_lon = reader.ReadInt32();
-                        logfile.Log32("end_lon = ", position, end_lon);
+                        txtlogfile.Log32("end_lon = ", position, end_lon);
                         double longitude = ((double)end_lon) / 100000.0;
-                        logfile.Logline("end_lon   = " + longitude);
+                        txtlogfile.Logline("end_lon   = " + longitude);
                         position += 4;
                     
                         int end_lat = reader.ReadInt32();
-                        logfile.Log32("end_lat = ", position, end_lat);
+                        txtlogfile.Log32("end_lat = ", position, end_lat);
                         double latitude = ((double)end_lat) / 100000.0;
-                        logfile.Logline("end_lat   = " + latitude);
+                        txtlogfile.Logline("end_lat   = " + latitude);
                         position += 4;
                     
                         point_count = reader.ReadInt32();
-                        logfile.Log32("point_count = ", position, point_count);
+                        txtlogfile.Log32("point_count = ", position, point_count);
                         position += 4;
                     }
                         
-                    logfile.Logline("\nData starts at " + position + " : " + position.ToString("X", CultureInfo.InvariantCulture) + "\n");
+                    txtlogfile.Logline("\nData starts at " + position + " : " + position.ToString("X", CultureInfo.InvariantCulture) + "\n");
 
                     //-------------------------------------------------
                     //-------------------------------------------------
@@ -372,7 +372,7 @@ public class SygicLogFile
                     // =======================================================================
                     // read data blocks
                     //-------------------------------------------------
-                    logfile.Logline(">>>>  longitude\taltitude\televation\ttime\tspeed\n");
+                    txtlogfile.Logline(">>>>  longitude\taltitude\televation\ttime\tspeed\n");
 
                     int correctTimeOfset = 0;
                     
@@ -403,7 +403,7 @@ public class SygicLogFile
                         // LONG----longitude-------------------------------------------4
                         int readLongitude = reader.ReadInt32();
 
-                        logfile.Log32("\tlongitude = ", position, readLongitude);
+                        txtlogfile.Log32("\tlongitude = ", position, readLongitude);
                         position += 4;
 
                         double longitude = ((double)readLongitude) / 100000.0;
@@ -411,7 +411,7 @@ public class SygicLogFile
                         if ((longitude > 360.0f) || (longitude < -180.0f))
                         {
                             // wrong long found
-                            logfile.Logline("\tBREAK Long  = " + readLongitude);
+                            txtlogfile.Logline("\tBREAK Long  = " + readLongitude);
                             Console.WriteLine("\tBREAK Long  = " + readLongitude + " = " + longitude);
                             break;
                         }
@@ -422,20 +422,20 @@ public class SygicLogFile
                         {
                             // (longitude < 0.01) //(longitude != 0)
                             needToStop = true;
-                            logfile.Logline("\tEND BREAK Long<10 : " + readLongitude);
+                            txtlogfile.Logline("\tEND BREAK Long<10 : " + readLongitude);
                         }
                         
                         if (trackPoints == point_count)
                         {
                             needToStop = true;
-                            logfile.Logline("\tEND BREAK last point reached : " + point_count);
+                            txtlogfile.Logline("\tEND BREAK last point reached : " + point_count);
                         }
                         
                         if (!needToStop)
                         {
                             // LONG----latitude----------------------------------------4
                             int readLatitude = reader.ReadInt32();
-                            logfile.Log32("\tlatitude = ", position, readLatitude);
+                            txtlogfile.Log32("\tlatitude = ", position, readLatitude);
                             position += 4;
 
                             double latitude = ((double)readLatitude) / 100000.0;
@@ -443,7 +443,7 @@ public class SygicLogFile
                             if ((latitude > 180.0f) || (latitude < -180.0f))
                             {
                                 // wrong lat found
-                                logfile.Logline("\tBREAK Lat  = " + readLatitude);
+                                txtlogfile.Logline("\tBREAK Lat  = " + readLatitude);
                                 
                                 // Console.WriteLine("\tBREAK Lat  = " + latitude);
                                 break;
@@ -451,12 +451,12 @@ public class SygicLogFile
 
                             // LONG----elevation---------------------------------------4
                             int elevation = reader.ReadInt32();
-                            logfile.Log32("\televation = ", position, elevation);
+                            txtlogfile.Log32("\televation = ", position, elevation);
                             position += 4;
 
                             // DWORD----time-------------------------------------------4
                             int pointStepTime = reader.ReadInt32();
-                            logfile.Log32("\tpointStepTime = ", position, pointStepTime);
+                            txtlogfile.Log32("\tpointStepTime = ", position, pointStepTime);
                             position += 4;
 
                             if (correctTimeOfset == 0)
@@ -476,19 +476,19 @@ public class SygicLogFile
                             // DateTime timeTZC = time2.AddHours(m_settings.TzcHours);
                             // timeTZC = timeTZC.AddMinutes(m_settings.TzcMinutes);
                             // log.log("\tTime = " + time2 + " TZC= " + timeTZC);
-                            logfile.Logline("\tTime = " + time2);
+                            txtlogfile.Logline("\tTime = " + time2);
                             
                             //----speed---------------------------------------------4
                             byte[] speedArray = reader.ReadBytes(4);
                             float speed = ByteArrayToFloat(speedArray);
 
-                            logfile.Log4Bytes("\tspeed = " + speed, position, speedArray[0], speedArray[1], speedArray[2], speedArray[3], false);
+                            txtlogfile.Log4Bytes("\tspeed = " + speed, position, speedArray[0], speedArray[1], speedArray[2], speedArray[3], false);
                             position += 4;
 
                             // BYTE----signal quality--------------------------------1
                             byte signalQuality = reader.ReadByte();
 
-                            logfile.LogByte("\tsignalQuality = ", position, signalQuality);
+                            txtlogfile.LogByte("\tsignalQuality = ", position, signalQuality);
                             position++;
 
                             // BYTE----speeding----(version 3 or higher)-------------1
@@ -496,30 +496,30 @@ public class SygicLogFile
                             {
                                 byte speeding = reader.ReadByte();
 
-                                logfile.LogByte("\tspeeding = ", position, speeding);
+                                txtlogfile.LogByte("\tspeeding = ", position, speeding);
                                 position++;
                             }
 
                             // BYTE----gsm signal quality----------------------------1
                             byte gsmSignalQuality = reader.ReadByte();
-                            logfile.LogByte("\tgsmSignalQuality = ", position, gsmSignalQuality);
+                            txtlogfile.LogByte("\tgsmSignalQuality = ", position, gsmSignalQuality);
                             position++;
 
                             // BYTE----internet signal quality-----------------------1
                             byte internetSignalQuality = reader.ReadByte();
-                            logfile.LogByte("\tinternetSignalQuality = ", position, internetSignalQuality);
+                            txtlogfile.LogByte("\tinternetSignalQuality = ", position, internetSignalQuality);
                             position++;
 
                             // BYTE----battery status--------------------------------1
                             byte batteryStatus = reader.ReadByte();
 
-                            logfile.LogByte("\tbatteryStatus = ", position, batteryStatus);
+                            txtlogfile.LogByte("\tbatteryStatus = ", position, batteryStatus);
                             position++;
 
                             // LOG----trackpoint=====================================
                             ++trackPoints;
 
-                            logfile.Logline(
+                            txtlogfile.Logline(
                                    ">>>>  " + (((double)readLongitude) / 100000.0)
                                     + "\t " + (((double)readLatitude) / 100000.0)
                                     + "\t " + elevation
@@ -573,16 +573,16 @@ public class SygicLogFile
                         else
                         {
                             // needToStop
-                            logfile.Logline("\tEND");
+                            txtlogfile.Logline("\tEND");
                             break;
                         }
                     } // while
                 } // using
 
             	// close log            	
-            	logfile.Logline("wrote trkpt : " + trackPoints);
-            	logfile.Logline("The End!\n");
-            	logfile.Close();                
+            	txtlogfile.Logline("wrote trkpt : " + trackPoints);
+            	txtlogfile.Logline("The End!\n");
+            	txtlogfile.Close();                
             }
             catch (Exception exception)
             {
