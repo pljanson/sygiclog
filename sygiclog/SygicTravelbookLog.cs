@@ -10,11 +10,12 @@
  * The Program part handles the command line options and calls the library for
  * each file to be processed (by SygicLogFile.cs)
  *
- * Copyright (C) 2014, Paul Janson
+ * Copyright (C) 2015, Paul Janson
  *
- * Version 1.5.0.rc3, add tcz and add unit tests GPXext 
+ * Version 1.5.0 final, (=rc3) also processes the Sygic 14.7.4 log files correctly
  *
  * History
+ * Version 1.5.0.rc3, add tcz and add unit tests GPXext
  * 1.5.0.rc2 fixed time, removed tzc for now, Sygic 14.3.3 version 5 files
  * 1.5.0.rc seams to work with Sygic 13.x version 5 files
  * 1.5.0beta updated for version 5 based on Lars's information; added version 2..5 unittests & test inputs
@@ -60,7 +61,7 @@ public static class SygicTravelbookLog
     /// <summary>
     /// The version string
     /// </summary>
-    public const string SygiclogVersionString = "Sygiclog v1.5.0rc3";
+    public const string SygiclogVersionString = "Sygiclog v1.5.0";
 
     /// <summary>
     /// The command line manual
