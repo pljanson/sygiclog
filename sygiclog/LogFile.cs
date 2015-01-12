@@ -108,7 +108,8 @@ public class LogFile
     /// <param name="logMessage">the log string / description</param>
     /// <param name="position">to position in the source file of this byte</param>
     /// <param name="value">the value of the byte</param>
-    public void LogByte(string logMessage, int position, byte value)
+    /// <returns> final string for unit testing
+    public string LogByte(string logMessage, int position, byte value)
     {
         // do log this line
         if (this.enabled)
@@ -116,7 +117,9 @@ public class LogFile
             string str = string.Format(CultureInfo.InvariantCulture, "\t{0}\tp[{1}|{1:x4}]:{2:X2}", value, position, value);
 
             this.writer.WriteLine(logMessage + str);
+            return logMessage + str;
         }
+        return "";
     }
 
     /// <summary>
@@ -129,7 +132,8 @@ public class LogFile
     /// <param name="byte3">byte 3</param>
     /// <param name="byte4">most significant byte</param>
     /// <param name="isChar">log as characters, else log as Hex values</param>
-    public void Log4Bytes(string logMessage, int position, byte byte1, byte byte2, byte byte3, byte byte4, bool isChar = true)
+    /// <returns> final string for unit testing
+    public string Log4Bytes(string logMessage, int position, byte byte1, byte byte2, byte byte3, byte byte4, bool isChar = true)
     {
         // do log this line
         if (this.enabled)
@@ -158,7 +162,9 @@ public class LogFile
             }
             
             this.writer.WriteLine(logMessage + str);
+            return logMessage + str;
         }
+        return "";
     }
     
     /// <summary>
@@ -167,7 +173,8 @@ public class LogFile
     /// <param name="logMessage">the log string / description</param>
     /// <param name="position">to position in the source file of this byte</param>
     /// <param name="value32">the 32bits value to log</param>
-    public void Log32(string logMessage, int position, int value32)
+    /// /// <returns> final string for unit testing
+    public string Log32(string logMessage, int position, int value32)
     {
         // do log this line
         if (this.enabled)
@@ -175,7 +182,9 @@ public class LogFile
             byte[] bytes = BitConverter.GetBytes(value32);
             string str = string.Format(CultureInfo.InvariantCulture, "\t{0}\tp[{1}|{1:x4}]:{2:X2}-{3:X2}-{4:X2}-{5:X2}", value32, position, bytes[0], bytes[1], bytes[2],  bytes[3]);
             this.writer.WriteLine(logMessage + str);
+            return logMessage + str;
         }
+        return "";
     }
 
     /// <summary>
