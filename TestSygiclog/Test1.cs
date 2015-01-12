@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Test1.cs" company="PLJ">
-// Copyright (C) 2014, Paul Janson, LGPL 2.1
+// Copyright (C) 2015, Paul Janson, LGPL 2.1
 // </copyright>
 //-----------------------------------------------------------------------
 /*
@@ -74,7 +74,7 @@ namespace TestSygiclog
         [Test]
         public static void SygicTravelbookLog()
         {
-            Assert.AreEqual("Sygiclog v1.5.0rc3", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
+            Assert.AreEqual("Sygiclog v1.5.0", Sygiclog.SygicTravelbookLog.SygiclogVersionString, " SygicTravelbookLog version sTitle");
             
             // TODO doUsage()
         }
@@ -92,7 +92,7 @@ namespace TestSygiclog
             LogFile logfile = new LogFile(enabled, logFileName);
             Assert.AreEqual(false, logfile.Enabled, "LogFile enabled False");
             
-            // test logfile exist ois false
+            // test logfile exist
             enabled = true;
             logFileName = "test1.logfile";
             LogFile logfile2 = new LogFile(enabled, logFileName);
@@ -108,6 +108,34 @@ namespace TestSygiclog
             Assert.AreEqual(16777216, Sygiclog.LogFile.Bytes2Int32(0, 0, 0, 1), "bytes2int32(0,0,0,1)");
             Assert.AreEqual(16843009, Sygiclog.LogFile.Bytes2Int32(1, 1, 1, 1), "bytes2int32(1,1,1,1)");
             
+            //LogByte
+            string logMessage = "message:";
+            int position = 1234;
+            byte value = 192;  
+            string result = logfile2.LogByte(logMessage, position, value);
+            Assert.AreEqual("message:\t192\tp[1234|04d2]:C0", result, "logByte(..)");
+                        
+             //Log4Byte true
+            position = 4321;
+            byte byte1 = 65;
+            byte byte2 = 67;
+            byte byte3 = 69;
+            byte byte4 = 71;
+            //string logMessage, int position, byte byte1, byte byte2, byte byte3, byte byte4, bool isChar = true
+            string result2 = logfile2.Log4Bytes(logMessage, position, byte1, byte2, byte3, byte4, true);
+            Assert.AreEqual("message:\t1195721537\tp[4321|10e1]:41-43-45-47 | ACEG", result2, "log4Bytes(.., true)");
+
+			string result3 = logfile2.Log4Bytes(logMessage, position, byte1, byte2, byte3, byte4, false);
+            Assert.AreEqual("message:\t1195721537\tp[4321|10e1]:41-43-45-47", result3, "log4Bytes(.., false)");
+	
+            //Log32
+            //(string logMessage, int position, int value32)
+            logMessage = "message:";
+            position = 1234;
+            int value32 = 192192;  
+            string result4 = logfile2.Log32(logMessage, position, value32);
+            Assert.AreEqual("message:\t192192\tp[1234|04d2]:C0-EE-02-00", result4, "log32(..)");
+                    
             logfile.Close();
             logfile2.Close();
         } // LogFile    	
@@ -463,7 +491,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Sønderjyske Motorvej  Vojens]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Sønderjyske Motorvej  Vojens]
                     Assert.AreEqual("[Sønderjyske Motorvej  Vojens]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[81|51]	[Sønderjyske Motorvej  Vojens]
 
-                    Assert.AreEqual("[120801_063158_120]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[139|8B]	[120801_063158_120]
+                    Assert.AreEqual("[120801_063158_120]", validatelogfile.StartTimeDescription, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[139|8B]	[120801_063158_120]
                     Assert.AreEqual("1-8-2012 8:31:58", validatelogfile.TP1Time, "TP1 Time = "); // Time = 1-8-2012 8:31:58
 
                     Assert.AreEqual(939019, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	939019	p[177|00b1]:0B-54-0E-00
@@ -512,7 +540,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Växjö]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Växjö]
                     Assert.AreEqual("[23  Grimslöv]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[35|23]	[23  Grimslöv]
 
-                    Assert.AreEqual("[120730_121948_120]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[61|3D]	[120730_121948_120]
+                    Assert.AreEqual("[120730_121948_120]", validatelogfile.StartTimeDescription, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[61|3D]	[120730_121948_120]
                     Assert.AreEqual("30-7-2012 14:19:48", validatelogfile.TP1Time, "TP1 Time = "); // Time = 30-7-2012 14:19:48
 
                     Assert.AreEqual(1480059, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	1480059	p[99|0063]:7B-95-16-00
@@ -570,7 +598,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Tongelresestraat 423/-  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Tongelresestraat 423/-  Eindhoven]
                     Assert.AreEqual("[Middenweg 235/224  Venlo]", validatelogfile.EndLogDescription, "EndLogDescription == "); //endLogDescription p[91|5B]	[Middenweg 235/224  Venlo]
 
-                    Assert.AreEqual("[130729_071649_120]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[141|8D]	[130729_071649_120]
+                    Assert.AreEqual("[130729_071649_120]", validatelogfile.StartTimeDescription, "Start Time Description == "); //startimeDescription YYMMDD_HHMMSS_OOO p[141|8D]	[130729_071649_120]
                     Assert.AreEqual("29-7-2013 9:16:49", validatelogfile.TP1Time, "TP1 Time = "); // Time = 29-7-2013 9:16:49
 
                     Assert.AreEqual(551283, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	551283	p[241|00f1]:73-69-08-00
@@ -619,7 +647,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Kawoepersteeg 21/24  Ermelo]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Kawoepersteeg 21/24  Ermelo]
                     Assert.AreEqual("[Looweg 15/10  Ermelo]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[79|4F]	[Looweg 15/10  Ermelo]
 
-                    Assert.AreEqual("[131231_154357_060]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[121|79]	[131231_154357_060]
+                    Assert.AreEqual("[131231_154357_060]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[121|79]	[131231_154357_060]
                     Assert.AreEqual("31-12-2013 16:43:57", validatelogfile.TP1Time, "TP1 Time = "); // Time = 31-12-2013 16:43:57
 
                     Assert.AreEqual(559696, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	559696	p[169|00a9]:50-8A-08-00
@@ -650,7 +678,7 @@ namespace TestSygiclog
             }
                        
             //- - - - -
-            // 14.3.1 (2014-06-17) Galaxy Note 3; rondje wasven
+            // 14.3.1 (2014-06-16) Galaxy Note 3; rondje wasven
             {
                 LogParserSettings settings = new LogParserSettings();
                 settings.InputFileName = "..\\..\\..\\TESTlogs\\140616_175053.log";
@@ -667,6 +695,9 @@ namespace TestSygiclog
                     Assert.AreEqual("16-6-2014 17:50:53", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time =
                     Assert.AreEqual("[Hofstraat 125/-  Eindhoven]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[27|1B]
                     Assert.AreEqual("[Tongelresestraat 425/-  Eindhoven]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[49|31]
+
+					Assert.AreEqual("[140616_155053_120]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[121|79]	[140616_155053_120]
+                    Assert.AreEqual("16-6-2014 17:50:53", validatelogfile.TP1Time, "TP1 Time = "); // Time = 2014-06-16 17:50:53
 
                     Assert.AreEqual(551067, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	550383	p[191|00bf]:EF-65-08-00
                     Assert.AreEqual(5144561, validatelogfile.TP1Latitude, "TP1 latitude = ");//latitude = 	5144251	p[195|00c3]:BB-7E-4E-00                
@@ -713,7 +744,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Nieuwleusenerdijk  Zwolle]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
              
                    //startimeDescription YYMMDD_HHMMSS_OOO p[125|7D]	[140922_051142_120]
-                    Assert.AreEqual("[140922_051142_120]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[125|7D]	[140922_051142_120]
+                    Assert.AreEqual("[140922_051142_120]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[125|7D]	[140922_051142_120]
                     Assert.AreEqual("22-9-2014 7:11:42", validatelogfile.TP1Time, "TP1 Time = "); // Time = 22-9-2014 7:11:42
 
                     Assert.AreEqual(550383, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	550383	p[191|00bf]:EF-65-08-00
@@ -760,7 +791,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
                     Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
                     Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
                     
                     Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
@@ -788,6 +819,55 @@ namespace TestSygiclog
                     Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
                 }
             }
+
+
+            //141227_191942.log  sygic 14.7.4 Skavska Sweden
+            {
+                LogParserSettings settings = new LogParserSettings();
+                settings.InputFileName = "..\\..\\..\\TESTlogs\\141227_191942.log";
+                settings.TxtLog = true;
+                SygicLogFile sygicLogFile = new SygicLogFile(settings);
+                Assert.AreEqual(true, sygicLogFile.Parse(), "parse");
+                ValidateLogFile validatelogfile = new ValidateLogFile(settings.InputFileName);
+                if (validatelogfile.Passed)
+                {
+                    // validate in the log file
+                    Assert.AreEqual(5, validatelogfile.LogFileVersion, "version == 5");
+                    Assert.AreEqual(623, validatelogfile.Trkpts, "trkpt == 623");
+
+                    Assert.AreEqual("27-12-2014 19:19:42", validatelogfile.CorrectedStartTime, "Corrected Start Time == "); // Corrected Start Time = 27-12-2014 19:19:42
+                    Assert.AreEqual("[52  Nyköping]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[52  Nyköping]
+                    Assert.AreEqual("[E4  Nyköping]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[E4  Nyköping]
+
+                    Assert.AreEqual("[141227_181942_060]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("27-12-2014 19:19:42", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
+                    
+                    Assert.AreEqual(1693714, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 1693714
+                    Assert.AreEqual(5877017, validatelogfile.TP1Latitude, "TP1 latitude = ");//latitude = 	5877017
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validatelogfile.Error, "validate error : ");
+                }
+
+                ValidateGpxFile validateGpxFile = new ValidateGpxFile(settings.InputFileName, settings.XmlExtension);
+                if (validateGpxFile.Passed)
+                {
+                    Assert.AreEqual("..\\..\\..\\TESTlogs\\141227_191942.log", validateGpxFile.GetTrkName(), "Gpx trackname");
+                    Assert.AreEqual(false, validateGpxFile.IsGpxExt(), "Is GpxExt");
+
+                    Assert.AreEqual(623, validateGpxFile.Trackpoints(), "tracks");
+                    Assert.AreEqual("2014-12-27T19:19:42", validateGpxFile.FirstTrackpointTime(), "trackpoint time");
+                    Assert.AreEqual(16.93714, validateGpxFile.FirstTrackpointLongitude(), 0.0001, "trackpoint longitude");
+                    Assert.AreEqual(58.77017, validateGpxFile.FirstTrackpointLatitude(), 0.0001, "trackpoint latitude");
+
+                }
+                else
+                {
+                    Assert.AreEqual(string.Empty, validateGpxFile.Error, "validate gpx error : ");
+                }
+            } //14.7.4
+            
         } // SygicLogFileV5
     }
      /// </summary>
@@ -826,7 +906,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription,
                         "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString,
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescription,
                         "Start Time Description == ");
                         // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
                     Assert.AreEqual("13-7-2014 13:09:41", validatelogfile.TP1Time, "TP1 Time = ");
@@ -894,7 +974,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
                     Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
                     Assert.AreEqual("13-7-2014 8:54:41", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
 
                     Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
@@ -953,7 +1033,7 @@ namespace TestSygiclog
                     Assert.AreEqual("[Route 88 1407/1406  Lakewood]", validatelogfile.StartLogDescription, "StartLogDescription == "); // startLogDescription p[23|17]	[Insulindelaan  Eindhoven]
                     Assert.AreEqual("[Route 9 532/533  Ocean]", validatelogfile.EndLogDescription, "EndLogDescription == "); // endLogDescription p[73|49]	[Nieuwleusenerdijk  Zwolle]
 
-                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescriptionString, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
+                    Assert.AreEqual("[140713_120341_-24]", validatelogfile.StartTimeDescription, "Start Time Description == "); // startimeDescription YYMMDD_HHMMSS_OOO p[127|7F]	[140713_120341_-24]
                     Assert.AreEqual("13-7-2014 11:39:41", validatelogfile.TP1Time, "TP1 Time = "); // Time = 13-7-2014 11:39:41
 
                     Assert.AreEqual(-7415324, validatelogfile.TP1Longitude, "TP1 longitude = ");//longitude = 	-7415324	p[219|00db]:E4-D9-8E-FF
