@@ -1,12 +1,21 @@
 Todos:
 
-for 1.5.0 
+for 2.0.0 
 
 road map
-1.5.0 final 
-    . no complains or success after holiday tracks
-
+2.0.0 I am Moving to Qt, so porbably no new C# version.
+  Their might be a last C# improvement as trial for Qt C++ code.
+  
+  If so I need to look into unit test concurrency, locking testfiles. 
+  
+  Posisble extentions are:
+  - move xml generation into classes instead of file writes.
+  - add GPX track viewer  
+  
 current
+1.5.0 final
+    test with latest Sygic 14.7.4 logs
+    
 RC3 tzc added, GPXext tests added
 rc2 v time fixed, tzc removed
 rc1
