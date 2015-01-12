@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SygicTravelbookLog.cs" company="PLJ">
+// Copyright (C) 2014, Paul Janson, LGPL 2.1
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Globalization; // Culture
 using System.IO; // File Path
 
@@ -47,7 +52,7 @@ namespace TestSygiclog
         /// <summary>
         /// Contains the start time Description string
         /// </summary>
-        private readonly string startTimeDescriptionString;
+        private readonly string startTimeDescription;
 
         /* Get first track point data:               
         >>>>  longitude	altitude	elevation	time	speed
@@ -126,7 +131,7 @@ namespace TestSygiclog
                                 // startimeDescription YYMMDD_HHMMSS_OOO p[125|7D]	[140922_051142_120]
                                 string scutoff = readline.Substring(40);
                                 int idx = scutoff.IndexOf('[');
-                                this.startTimeDescriptionString = scutoff.Substring(idx);
+                                this.startTimeDescription = scutoff.Substring(idx);
 
                             }
                             else if (readline.StartsWith(">>>>  longitude	altitude", StringComparison.Ordinal))
@@ -245,9 +250,9 @@ namespace TestSygiclog
         /// <summary>
         /// Gets the found startimeDescription
         /// </summary>
-        public string StartTimeDescriptionString
+        public string StartTimeDescription
         {
-            get { return this.startTimeDescriptionString; }
+            get { return this.startTimeDescription; }
         }
 
         //----Track Point 1 data-----------------------------------------
