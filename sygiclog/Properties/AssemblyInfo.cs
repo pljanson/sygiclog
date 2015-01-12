@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="PLJ">
-// Copyright (C) 2014, Paul Janson, LGPL 2.1
+// Copyright (C) 2015, Paul Janson, LGPL 2.1
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Reflection;
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PLJ")]
 [assembly: AssemblyProduct("sygiclog")]
-[assembly: AssemblyCopyright("Copyright © PLJ 2014")]
+[assembly: AssemblyCopyright("Copyright © PLJ 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
