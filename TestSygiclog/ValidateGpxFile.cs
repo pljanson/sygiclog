@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SygicTravelbookLog.cs" company="PLJ">
+// Copyright (C) 2014, Paul Janson, LGPL 2.1
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Globalization; // Culture
 using System.IO; // File Path
 using System.Xml;
